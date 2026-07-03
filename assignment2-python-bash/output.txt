@@ -1,0 +1,2 @@
+Hello, this is my DevOps assignment file.
+Written using Python file handling.
