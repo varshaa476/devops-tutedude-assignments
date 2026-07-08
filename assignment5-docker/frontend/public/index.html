@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>Submit Your Details</title></head>
+<body>
+    <h1>Submit Your Details</h1>
+    <form id="myForm">
+        <label>Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label>Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+            try {
+                const response = await fetch("http://" + window.location.hostname + ":5000/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById("result").innerText = data.message;
+                } else {
+                    document.getElementById("result").innerText = "Error: " + data.error;
+                }
+            } catch (err) {
+                document.getElementById("result").innerText = "Error: " + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
